@@ -2,6 +2,9 @@ import Vue from "vue";
 import Vuesax from "vuesax";
 
 import "vuesax/dist/vuesax.css";
+import "boxicons";
+import "boxicons/css/boxicons.min.css";
+
 Vue.use(Vuesax, {
   colors: {
     primary: "#5b3cc4",
