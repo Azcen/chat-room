@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- <h1>im a chat room, pls chat</h1>
+    <p>{{ usersMessages }}</p>
     <p>{{ messages }}</p> -->
     <vs-row>
       <vs-col
@@ -16,10 +17,10 @@
   </div>
 </template>
 <script>
-import gql from "graphql-tag";
 import ChatContainer from "@/components/ChatContainer.vue";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("Chat");
+import gql from "graphql-tag";
 
 export default {
   name: "ChatRoom",
@@ -27,34 +28,46 @@ export default {
     ChatContainer,
   },
   apollo: {
-    messages: gql`
-      query {
-        messages {
-          id
-          content
-          user
-        }
-      }
-    `,
+    // messages: gql`
+    //   query {
+    //     messages {
+    //       id
+    //       content
+    //       user
+    //     }
+    //   }
+    // `,
+    $subscribe: {
+      messages: {
+        query: gql`
+          subscription {
+            messages {
+              id
+              content
+              user
+            }
+          }
+        `,
+        result({ data }) {
+          this.setMessages(data.messages);
+          // this.messages = data.messages;
+        },
+      },
+    },
   },
   data: () => ({
-    // messages: [
-    //   {
-    //     id: 1,
-    //     user: 'Alex',
-    //     msg: 'Wey! Listen'
-    //   }
-    // ]
-    messages: "",
+    messages: [],
   }),
   computed: {
     ...mapGetters(["usersMessages", "userName"]),
   },
   created() {
-    this.loadMessages();
+    if (!this.userName) {
+      this.$router.push({ name: "Login" });
+    }
   },
   methods: {
-    ...mapActions(["loadMessages"]),
+    ...mapActions(["setMessages"]),
     getMessages() {},
   },
 };

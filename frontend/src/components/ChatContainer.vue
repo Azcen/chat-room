@@ -1,25 +1,31 @@
 <template>
   <div class="msg-container">
     <div class="messages-box">
-      <ChatMessage
-        :mine="item.user === userName"
-        :message="item.content"
-        :user="item.user"
-        v-for="(item, index) in usersMessages"
-        :key="index"
-      ></ChatMessage>
+      <div id="box">
+        <ChatMessage
+          :mine="item.user === userName"
+          :same-user="
+            index === 0 ? false : item.user === usersMessages[index - 1].user
+          "
+          :message="item.content"
+          :user="item.user"
+          v-for="(item, index) in usersMessages"
+          :key="index"
+        ></ChatMessage>
+      </div>
     </div>
     <div class="message-input">
       <vs-input
         primary
         v-model="message"
         placeholder="Escribe un mensaje"
+        v-on:keyup.enter="send({ user: userName, content: message })"
       ></vs-input>
       <vs-button
         icon
         color="#7d33ff"
         relief
-        @click="sendMessage({ user: userName, content: message })"
+        @click="send({ user: userName, content: message })"
       >
         <i class="bx bxs-paper-plane"></i>
       </vs-button>
@@ -44,6 +50,17 @@ export default {
   },
   methods: {
     ...mapActions(["sendMessage"]),
+    send(payload) {
+      console.log(payload);
+      this.sendMessage(payload);
+      this.message = "";
+      this.scrollToBottom();
+    },
+    scrollToBottom() {
+      let element = document.getElementById("box");
+      element.scrollIntoView({ behavior: "smooth", block: "end" });
+      console.log(element);
+    },
   },
 };
 </script>

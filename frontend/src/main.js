@@ -7,7 +7,7 @@ import "./style";
 import { apolloClient } from "./apollo";
 
 Vue.config.productionTip = false;
-// Vue.use(VueApollo);
+Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,

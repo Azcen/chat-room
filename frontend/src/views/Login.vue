@@ -5,7 +5,11 @@
         {{ name }}
       </template>
     </vs-avatar>
-    <vs-input v-model="name" placeholder="Ingresa tu nombre" />
+    <vs-input
+      v-model="name"
+      placeholder="Ingresa tu nombre"
+      v-on:keyup.enter="setName(name)"
+    />
     <vs-button color="#7d33ff" relief @click="setName(name)" class="btn-mg">
       <i class="bx bxs-paper-plane icon-mgr"></i> Ingresar
     </vs-button>

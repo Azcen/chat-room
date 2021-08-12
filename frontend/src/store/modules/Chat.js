@@ -16,7 +16,7 @@ const state = {
 
 const mutations = {
   SET_MESSAGES(state, payload) {
-    state.usersMessages = payload.messages;
+    state.usersMessages = payload;
   },
   SET_USER_NAME(state, payload) {
     state.userName = payload;
@@ -24,20 +24,10 @@ const mutations = {
 };
 
 const actions = {
-  async loadMessages({ commit }) {
-    const messages = await apolloClient.query({
-      query: gql`
-        query {
-          messages {
-            id
-            content
-            user
-          }
-        }
-      `,
-    });
-
-    commit("SET_MESSAGES", messages.data);
+  async setMessages({ commit }, payload) {
+    if (payload) {
+      commit("SET_MESSAGES", payload);
+    }
   },
   setName({ commit }, payload) {
     if (payload) {
@@ -45,8 +35,8 @@ const actions = {
       app.$router.push({ name: "ChatRoom" });
     }
   },
+  // eslint-disable-next-line no-unused-vars
   sendMessage({ commit }, payload) {
-    console.log(payload);
     if (payload) {
       apolloClient.mutate({
         mutation: gql`
