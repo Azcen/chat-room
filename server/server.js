@@ -1,6 +1,14 @@
 const { GraphQLServer, PubSub } = require('graphql-yoga')
 
-const messages = []
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000");
+
+const Message = mongoose.model("Message",{
+  user: String,
+  content: String,
+});
+const model = Message.find()
+const messages =  model
 
 const typeDefs = `
   type Message {
@@ -29,15 +37,11 @@ const resolvers = {
     messages: () => messages,
   },
   Mutation: {
-    postMessage: (parent, {user, content}) => {
-      const id = messages.length
-      messages.push({
-        id,
-        user,
-        content
-      })
+    postMessage: async (parent, {user, content}) => {
+      const message = new Message({user, content})
+      await message.save()
       subscribers.forEach((fn) => fn())
-      return id
+      return message
     }
   },
   Subscription: {
@@ -55,6 +59,8 @@ const resolvers = {
 const pubsub = new PubSub()
 const server = new GraphQLServer({ typeDefs, resolvers, context: { pubsub } })
 
-server.start(({port}) => {
-    console.log(`Server on http://localhost:${port}/`)
-})
+mongoose.connection.once("open", function(){
+  server.start(({port}) => {
+      console.log(`Server on http://localhost:${port}/`)
+  })
+});
