@@ -19,41 +19,36 @@
           license
         </vs-navbar-item> -->
         <template #right>
-          <vs-button flat>Login</vs-button>
-          <vs-button>Get Started</vs-button>
+          <vs-avatar class="btn-mg" v-if="userName">
+            <template #text>
+              {{ userName }}
+            </template>
+          </vs-avatar>
         </template>
       </vs-navbar>
     </div>
     <router-view />
-    <vs-sidebar
-    absolute
-    v-model="active"
-    open
-    >
+    <vs-sidebar absolute v-model="active" open v-if="$route.name !== 'Login'">
       <template #logo>
         <h4 text-white>Hey Chat-Now!</h4>
       </template>
-      <template #header>
-
-      </template>
+      <template #header> </template>
       <vs-sidebar-item id="chat">
         <template #icon>
-          <i class='bx bx-chat' ></i>
+          <i class="bx bx-chat"></i>
         </template>
         Chat
       </vs-sidebar-item>
       <template #footer>
         <vs-row justify="space-between">
           <vs-avatar>
-            <img src="/avatars/avatar-5.png" alt="">
+            <img src="/avatars/avatar-5.png" alt="" />
           </vs-avatar>
 
           <vs-avatar badge-color="danger" badge-position="top-right">
-            <i class='bx bx-bell' ></i>
+            <i class="bx bx-bell"></i>
 
-            <template #badge>
-              28
-            </template>
+            <template #badge> 28 </template>
           </vs-avatar>
         </vs-row>
       </template>
@@ -61,11 +56,16 @@
   </div>
 </template>
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("Chat");
 export default {
   data: () => ({
-    active: 'chat',
-  })
-}
+    active: "chat",
+  }),
+  computed: {
+    ...mapGetters(["userName"]),
+  },
+};
 </script>
 
 <style lang="scss">

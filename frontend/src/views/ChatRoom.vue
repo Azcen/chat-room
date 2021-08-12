@@ -18,6 +18,8 @@
 <script>
 import gql from "graphql-tag";
 import ChatContainer from "@/components/ChatContainer.vue";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("Chat");
 
 export default {
   name: "ChatRoom",
@@ -45,7 +47,14 @@ export default {
     // ]
     messages: "",
   }),
+  computed: {
+    ...mapGetters(["usersMessages", "userName"]),
+  },
+  created() {
+    this.loadMessages();
+  },
   methods: {
+    ...mapActions(["loadMessages"]),
     getMessages() {},
   },
 };

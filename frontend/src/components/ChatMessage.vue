@@ -2,15 +2,15 @@
   <div class="flex" :class="isMine">
     <div class="user-av">
       <vs-avatar dark>
-        <i class="bx bx-user" text-white></i>
+        <template #text>
+          {{ user }}
+        </template>
       </vs-avatar>
     </div>
     <vs-card class="msg-box">
       <template #text>
         <p class="text-mg">
-          asdasd asdas asd asdasd dxcqa asdqwe asdazx asdasd qwea asd qwe azsas
-          a qwe asd qwer aasd asdasd asdas asd asdasd dxcqa asdqwe asdazx asdasd
-          qwea asd qwe azsas a qwe asd qwer aasd
+          {{ message }}
         </p>
       </template>
     </vs-card>
@@ -23,6 +23,14 @@ export default {
     mine: {
       default: () => false,
       type: Boolean,
+    },
+    message: {
+      default: () => "",
+      type: String,
+    },
+    user: {
+      default: () => "",
+      type: String,
     },
   },
   computed: {
@@ -38,12 +46,12 @@ export default {
 .flex
   display: flex
   margin: 1rem 2rem
-  flex-direction: row-reverse
+  flex-direction: row
   .msg-box
     .vs-card
       background-color: #e7e4f9
 .my-msg
-  flex-direction: row
+  flex-direction: row-reverse
 .text-mg
   padding: 0.6rem 0.5rem
 .user-av
