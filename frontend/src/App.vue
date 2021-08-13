@@ -39,6 +39,23 @@
         </template>
         Chat
       </vs-sidebar-item>
+      <vs-sidebar-item id="">
+        <template #icon>
+          <i class="bx bx-search-alt"></i>
+        </template>
+        <vs-input v-model="query" placeholder="Buscar Mensajes" />
+      </vs-sidebar-item>
+      <div v-if="queryResult">
+        <ChatMessage
+          :mine="false"
+          :same-user="false"
+          :message="item.content"
+          :user="item.user"
+          v-for="(item, index) in queryResult"
+          :key="index"
+        ></ChatMessage>
+      </div>
+      >
       <template #footer>
         <vs-row justify="space-between">
           <vs-avatar>
@@ -56,14 +73,28 @@
   </div>
 </template>
 <script>
+import ChatMessage from "@/components/ChatMessage.vue";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("Chat");
 export default {
+  components: {
+    ChatMessage,
+  },
   data: () => ({
     active: "chat",
+    query: "",
   }),
   computed: {
-    ...mapGetters(["userName"]),
+    ...mapGetters(["userName", "usersMessages"]),
+    queryResult() {
+      const pattern = RegExp(`${this.query}${this.query ? "+" : ""}`, "gi");
+      console.log(pattern);
+      return this.query
+        ? this.usersMessages.filter((msg) => {
+            return pattern.test(msg.content) === true;
+          })
+        : [];
+    },
   },
 };
 </script>
