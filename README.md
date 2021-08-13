@@ -3,14 +3,14 @@
 ## Instalacion
 ### Server
 
-```
+```bash
 cd chat-room/server/
 npm install
 npm run serve
 ```
 ### Frontend
 
-```javascript
+```bash
 cd chat-room/frontend/
 npm install
 npm run serve
