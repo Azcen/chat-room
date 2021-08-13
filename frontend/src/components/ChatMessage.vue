@@ -59,9 +59,11 @@ export default {
   flex-direction: row
   .msg-box
     .vs-card
-      background-color: #e7e4f9
+      background-color: #b8eac7
 .my-msg
   flex-direction: row-reverse
+  .vs-card
+      background-color: #e7e4f9 !important
 .text-mg
   padding: 0.6rem 0.5rem
 .user-av
