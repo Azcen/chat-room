@@ -37,7 +37,7 @@
         <template #icon>
           <i class="bx bx-chat"></i>
         </template>
-        Chat
+        Buscador
       </vs-sidebar-item>
       <vs-sidebar-item id="">
         <template #icon>
@@ -88,7 +88,6 @@ export default {
     ...mapGetters(["userName", "usersMessages"]),
     queryResult() {
       const pattern = RegExp(`${this.query}${this.query ? "+" : ""}`, "gi");
-      console.log(pattern);
       return this.query
         ? this.usersMessages.filter((msg) => {
             return pattern.test(msg.content) === true;

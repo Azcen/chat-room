@@ -51,15 +51,17 @@ export default {
   methods: {
     ...mapActions(["sendMessage"]),
     send(payload) {
-      console.log(payload);
-      this.sendMessage(payload);
-      this.message = "";
-      this.scrollToBottom();
+      if(payload.content) {
+        this.sendMessage(payload);
+        this.message = "";
+        this.scrollToBottom();
+      }
     },
     scrollToBottom() {
       let element = document.getElementById("box");
-      element.scrollIntoView({ behavior: "smooth", block: "end" });
-      console.log(element);
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 100);
     },
   },
 };
@@ -67,12 +69,13 @@ export default {
 <style lang="sass">
 .msg-container
   background-color: #fff
-  height: 90vh
+  height: 85vh
   border-radius: 1rem
   display: flex
   max-width: 50%
   flex-direction: column
   margin: 0 auto
+  padding: 2rem 0
 
 .messages-box
   display: flex
