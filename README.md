@@ -4,7 +4,6 @@
 ### Server
 
 ```bash
-cd chat-room/server/
 npm install
 npm run serve
 ```
@@ -15,11 +14,14 @@ cd chat-room/frontend/
 npm install
 npm run serve
 ```
+####
+Sitio de prueba en [GitHub Pages](https://azcen.github.io/chat-room-frontend/).
+
 ## Configuracion
 ### Server
 
-###### Se debe agregar tu conexion a MongoDB en la siguiente linea
+###### Se debe agregar tu conexion a MongoDB en en un archivo .env como el siguiente ejemplo
 
 ```javascript
-mongoose.connect("mongodb://127.0.0.1:27017/tu-conexion-aqui");
+DB_STRING="mongodb://127.0.0.1:27017/tu-conexion-aqui"
 ```
