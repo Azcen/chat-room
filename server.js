@@ -1,7 +1,7 @@
-const { GraphQLServer, PubSub } = require('graphql-yoga')
-
+const { GraphQLServer, PubSub } = require('graphql-yoga');
+require('dotenv').load()
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000");
+mongoose.connect(process.env.DB_STRING);
 
 const Message = mongoose.model("Message",{
   user: String,
